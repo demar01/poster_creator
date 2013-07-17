@@ -1,0 +1,168 @@
+\documentclass[11pt, oneside]{article}     % use "amsart" instead of "article" for AMSLaTeX format
+ \usepackage{graphicx}                 		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode							% TeX will automatically convert eps --> pdf in pdflatex
+\usepackage{amssymb}
+\usepackage[space]{grffile}
+\usepackage[english]{babel}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{color}
+
+\title{Influence on regional mutation rates}
+\author{Maria Dermit}
+%\date{}							% Activate to display a given date or no date
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+{\bf{\color{blue} METHODS}}
+
+\textbf{Cancer single nucleotide variation data.} 
+ Autosomal SNVs of human cancer cells
+were obtained from the supplementary data files of the respective publications:
+In contrast to Lenher data(32,075 SNVs for melanoma, 27,246 for prostate cancer, 21,707 for lung cancer, 3,861 SNVs for leukaemia) 
+ 
+ \textbf{Cancer breakpoint data.}
+
+
+
+ \textbf{Germline polymorphism data.} 
+ dbSNP build 130 comprising 4,118,806 SNPs was
+downloaded from the NCBI FTP server. SNP data from 1000 genomes pilot 2 for
+two family trios of Central European and West African descent were downloaded
+from the 1000 genomes FTP server, yielding 5,739,704 unique SNPs
+27. Structural variants data from 000 genomes pilot 2 for two family trios of Central European and West African descent were downloaded
+from the 1000 genomes FTP server, yielding XXXXX SV.
+
+\textbf{Human–chimp sequence divergence.}
+Divergence data between Homo sapiens
+and Pan troglodytes were extracted from EPO (Enredo–Pecan–Ortheus) wholegenome alignments
+28 available from Ensembl release 54. The species tree used to
+construct the alignment contained genomic sequences of human, chimp,
+orangutan, macaque, mouse, rat, dog, horse and cow. This enabled the inference
+of ancestral alleles for each change. The human–chimp alignment covers more
+than 88\% of the human genome, yielding approximately 10 8
+substitutions across
+all autosomes.
+
+\textbf{Genome-wide feature sets.}
+. The genome-wide uniqueness of
+24-base polymers was calculated by the ENCODE project and downloadedfrom the
+University of California, Santa Cruz (UCSC) genome browser
+18 Short sequence tags for histone methylations, H2AZ,
+CTCF, PolII binding 20
+and histone acetylations 19
+were converted to read densities
+
+ %\begin{comment}  The analysis in the papers documents does not include two filters Lehner applied. They used two filters, one for mappability and one for conservation. The reduction after mappability filter is resumed in the follow table( which is about 30\%!) %\end{comment}  
+ 
+ \textbf{Filtering of data}. Previous studies applied two types of filters:  mappability and conservation.
+\begin{description} 
+\item[mappability] The mappability feature assigns values of 1 to
+unique 24-base polymers in the genome, 0.5 to those that occur twice, 0.33 to those
+that occur three times, and 0 otherwise. We empirically established a conservative
+cut-off value of 0.8 for the average mappability per window, excluding windows
+with highly repetitive DNA elements. 
+Mappability files were obtained from 
+\\ http://hgdownload.cse.ucsc.edu/goldenpath/hg18/encodeDCC/wgEncodeMapability/wgEncodeDukeUniqueness24bp.wig.gz. 
+\item[conservation]  The conservation filter was obtained log-odds Siphy-p scores with a
+cut-off threshold of 3 to identify conserved residues. To mask certain genomic
+regions while calculating the window averages of each property, we only counted
+those nucleotides in each genomic window that were not masked by the applied
+filter. Individual windows were excluded from the analysis if more than 90\% of the
+nucleotides were masked. 
+\item[Additional]  Additional filters?
+\end{description}
+Here only mappability filter is used. Reduction of the data after applying this filter is summarised in the following table. 
+\begin{table}[ht]
+\caption{ Percentage of bins masked after applying conservative filter for mappability} % title of Table
+\centering  % used for centering table
+\begin{tabular}{c c c c} % centered columns (4 columns)
+\hline\hline                        %inserts double horizontal lines
+10Mb & 1Mb &100kb & 10kb \\ [0.5ex] % inserts table 
+%heading
+\hline                  % inserts single horizontal line
+0.297 & 0.258 & 0.278 & 0.292  \\ % inserting body of the table
+\hline %inserts single line
+\end{tabular}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}
+
+
+\textbf{Principal component analysis.}
+Principal component analysis was performed on
+the mappability-filtered matrix of 2015 rows representing 1-Mb windows and
+columns corresponding to 47 genomic features as well as cancer SNV, germline
+SNP and human–chimp divergence densities. Calculations were performed in R
+using the princomp function. All feature vectors were scaled to mean 0 and
+standard deviation 1.
+
+\textbf{Iterative model refinement.}
+Linear regression.To identify the minimal informative set of predicti	ve
+features for somatic SNV, germline SNP and human–chimp divergence densities,
+linear models were fitted by generalized least-squares estimation between each
+individual feature and somatic/germline SNP density. We compared the models
+by their Akaike information criterion (AIC) and chose the feature with minimal
+AIC. This procedure was repeated 46 times, adding one feature to the model at
+each iteration. The set of features with minimal AIC was chosen as the minimal
+informative set of predictive features. Percentage explained variance was calculated as the R
+2
+of a linear regression model using these sets of predictive features.
+Calculations were performed in R using the AIC, gls and lm functions.
+
+\textbf{Chromatin Color Code.}
+
+\textbf{Influence of centromeres and telomeres.}
+
+\textbf{Iterative model refinement.}
+
+\begin{figure}[H]
+ \begin{subfigure}
+     \includegraphics[width=10cm]{/Users/dermit01/Downloads/pearson_correlation.pdf}
+      \end{subfigure}%
+       \begin{subfigure}
+            \includegraphics[width=10cm]{/Users/dermit01/Downloads/correlation_matrix.pdf}
+        \end{subfigure}%
+        
+      \caption{\bf{The density of somatic mutations in cancer genomes}  a,  Pearson correlation coefficients
+of cancer SNVs (blue), dbSNP density (red) and human–chimp divergence
+(purple) with genomic features in non-overlapping, non-repetitive windows of
+different sizes along the genome. b, The correlation matrix. Dark green denotes
+negative and yellow positive correlation at 1-Mb resolution. c, Smoothed
+scatter-plot of cancer SNV density against H3K9me3 modification levels, both
+normalized to standard scores. Correlation plots for all other features are
+available in Supplementary Figs 5–8. The measure of replication timing used
+here is high for early replicating regions.
+\end{figure}
+
+      
+      \begin{figure}[H]
+     \includegraphics[width=10cm]{/Users/dermit01/Downloads/pearson_correlation_Separated.pdf}
+    \caption{\bf{Correlation coefficients of SNV density from individual cancer genomes at 1-Mb resolution with diverse genetic and epigenetic features.}}
+      \end{figure}
+
+       \begin{figure}[H]
+     \includegraphics[width=10cm]{/Users/dermit01/Downloads/coef_determintation.pdf}
+    \caption{\bf{Prediction of cancer SNV density variation using integrated models}} Cumulative R ^{2}  of linear models, adding the feature on the x axis as a predictor at each step
+      \end{figure}
+      
+      \label{fig:/Users/dermit01/Downloads/corplot.pdf}
+\end{figure}
+
+
+ \textbf{Analysis of the four types of plots generated}
+ 
+\begin{description}
+  \item[Scatter plots] Correlations between all genomic features and SNV  density in cancer genomes in non-overlapping 1Mb windows across the human 
+genome (normalized to standard scores).  I do not understand  the axis in the correlation scatter plots!  %\begin{comment} SmothScatter is done from the matrix of presence of each feature in each bean  How they can have that scale???!!!! %\end{comment}  
+  \item[Correlation plots ] Please explain 
+   \item[Correlation matrix ] Please explain no value in the correlation matrix is supposed to be higher  
+  \item[Regression plots] Please explain 
+  
+\end{description}
+
+\end{document}
